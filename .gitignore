@@ -32,3 +32,5 @@ build/
 /.mvn/
 /mvnw
 /mvnw.cmd
+
+shop-admin-ui/src/main/resources/static
