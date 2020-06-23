@@ -1,4 +1,4 @@
-package model;
+package ru.geekbrains.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

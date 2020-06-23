@@ -1,7 +1,6 @@
-package model;
+package ru.geekbrains.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.Set;
 
 @Entity
@@ -24,7 +23,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @Email
     @Column(length = 255)
     private String email;
 

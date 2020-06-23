@@ -1,6 +1,6 @@
-package repo;
+package ru.geekbrains.repo;
 
-import model.User;
+import ru.geekbrains.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

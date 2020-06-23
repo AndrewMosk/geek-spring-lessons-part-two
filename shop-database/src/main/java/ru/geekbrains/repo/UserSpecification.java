@@ -1,6 +1,6 @@
-package repo;
+package ru.geekbrains.repo;
 
-import model.User;
+import ru.geekbrains.model.User;
 import org.springframework.data.jpa.domain.Specification;
 
 
