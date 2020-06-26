@@ -14,7 +14,7 @@ public class Product {
 
     @NotBlank
     @Column(length = 64)
-    private String title;
+    private String name;
 
     @Column(length = 32)
     private BigDecimal cost;
@@ -22,9 +22,9 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, String title, BigDecimal cost) {
+    public Product(Long id, String name, BigDecimal cost) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.cost = cost;
     }
 
@@ -36,12 +36,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public BigDecimal getCost() {

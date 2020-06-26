@@ -10,7 +10,16 @@
        drop constraint FK2o0jvgh89lemvvo17cbqvdxaa;
     GO
 
-    drop table products;
+    alter table categories
+       drop index UK_t8o6pivur7nn124jehx7cygw5;
+    GO
+
+    alter table products_categories
+       drop constraint FKd112rx0alycddsms029iifrih;
+    GO
+
+    alter table products_categories
+       drop constraint FKlda9rad6s180ha3dl1ncsp8n7;
     GO
 
     drop table roles;
@@ -20,4 +29,13 @@
     GO
 
     drop table users_roles;
+    GO
+
+    drop table categories;
+    GO
+
+    drop table products;
+    GO
+
+    drop table products_categories;
     GO

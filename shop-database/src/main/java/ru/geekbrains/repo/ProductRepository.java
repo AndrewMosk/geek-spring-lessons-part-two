@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    Product findByTitle(String name);
+    Product findByName(String name);
 
     void deleteById(Long id);
 
@@ -30,5 +30,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             nativeQuery = true)
     Page<Product> findByMinAndMaxPrice(Pageable pageable);
 
-    Page<Product> findByTitleContains(@NotBlank String title, Pageable pageable);
+    Page<Product> findByNameContains(@NotBlank String name, Pageable pageable);
 }

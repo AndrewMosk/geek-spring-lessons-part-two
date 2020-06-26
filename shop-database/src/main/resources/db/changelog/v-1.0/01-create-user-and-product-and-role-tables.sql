@@ -1,8 +1,22 @@
     create table products (
        id bigint not null auto_increment,
+        name varchar(64),
         cost decimal(19,2),
-        title varchar(64),
         primary key (id)
+    ) engine=InnoDB;
+GO
+
+    create table categories (
+       id bigint not null auto_increment,
+        name varchar(255) not null,
+        primary key (id)
+    ) engine=InnoDB
+GO
+
+    create table products_categories (
+       product_id bigint not null,
+       category_id bigint not null,
+       primary key (product_id, category_id)
     ) engine=InnoDB;
 GO
 
@@ -44,4 +58,20 @@ GO
        add constraint FK2o0jvgh89lemvvo17cbqvdxaa
        foreign key (user_id)
        references users (id);
+GO
+
+    alter table categories
+       add constraint UK_t8o6pivur7nn124jehx7cygw5 unique (name);
+GO
+
+    alter table products_categories
+       add constraint FKd112rx0alycddsms029iifrih
+       foreign key (category_id)
+       references categories (id);
+GO
+
+    alter table products_categories
+       add constraint FKlda9rad6s180ha3dl1ncsp8n7
+       foreign key (product_id)
+       references products (id);
 GO
