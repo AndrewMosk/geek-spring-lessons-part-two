@@ -3,6 +3,7 @@ package ru.geekbrains.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
@@ -18,6 +19,12 @@ public class Product {
 
     @Column(length = 32)
     private BigDecimal cost;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "products_categories",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
 
     public Product() {
     }
