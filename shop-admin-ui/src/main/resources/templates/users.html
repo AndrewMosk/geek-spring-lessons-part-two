@@ -11,7 +11,7 @@
     <link rel="stylesheet" th:href="@{css/fontawesome-all.min.css}">
     <link rel="stylesheet" th:href="@{css/bootadmin.min.css}">
 
-    <title>Datatables | BootAdmin</title>
+    <title>Users | BootAdmin</title>
 </head>
 <body class="bg-light">
 
@@ -67,7 +67,7 @@
             </script>
         </div>
 
-        <h2 class="mb-4">Datatables</h2>
+        <h2 class="mb-4">Users</h2>
 
         <div class="card mb-4">
             <div class="card-body">
@@ -83,7 +83,7 @@
                     </thead>
                     <tbody>
                     <tr th:unless="${usersPage.hasContent()}">
-                        <td class="text-center" colspan="5">No data</td>
+                        <td class="text-center" colspan="6">No data</td>
                     </tr>
                     <tr th:if="${usersPage.hasContent()}"  th:each="user : ${usersPage.content}">
                         <td th:text = "${user.id}">Tiger Nixon</td>
@@ -91,24 +91,12 @@
                         <td  th:text = "${user.email}">Edinburgh</td>
                         <td  th:text = "${user.age}">$320,800</td>
                         <td>
-                            <a href="#" class="btn btn-icon btn-pill btn-primary" data-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-edit"></i></a>
-                            <a href="#" class="btn btn-icon btn-pill btn-danger" data-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-trash"></i></a>
+                            <a th:href="@{/user/edit(id=${user.id})}" class="btn btn-icon btn-pill btn-primary" data-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-edit"></i></a>
+                            <form th:action="@{/user(id=${user.id})}" th:method="delete">
+                                <button class="btn btn-icon btn-pill btn-danger" data-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-trash"></i></button>
+                            </form>
                         </td>
                     </tr>
-<!--                    -->
-<!--                    <tr th:if="${usersPage.hasContent()}"  th:each="user : ${usersPage.content}">-->
-<!--                        <th scope="row" th:text = "${user.id}">1</th>-->
-<!--                        <td th:text = "${user.name}">Alex</td>-->
-<!--                        <td th:text = "${user.email}">email@mail.com</td>-->
-<!--                        <td th:text = "${user.age}">18</td>-->
-<!--                        <td sec:authorize="hasAnyRole('SUPERADMIN')">-->
-<!--                            <a class="btn btn-success" th:href="@{/user/edit(id=${user.id})}"><i class="fas fa-edit"></i></a>-->
-<!--                            <form th:action="@{/user(id=${user.id})}" th:method="delete">-->
-<!--                                <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>-->
-<!--                            </form>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-
                     </tbody>
                 </table>
             </div>
