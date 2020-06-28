@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,11 +16,11 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     User findByName(String name);
 
-    Page<User> findByAgeGreaterThanEqual(Integer age, Pageable pageable);
+    List<User> findByAgeGreaterThanEqual(Integer age);
 
-    Page<User> findByAgeBetween(Integer minAge, Integer maxAge, Pageable pageable);
+    List<User> findByAgeBetween(Integer minAge, Integer maxAge);
 
-    Page<User> findByAgeLessThanEqual(Integer age, Pageable pageable);
+    List<User> findByAgeLessThanEqual(Integer age);
 
     Optional<User> findUserByName(String username);
 }

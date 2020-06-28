@@ -82,10 +82,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:unless="${usersPage.hasContent()}">
-                        <td class="text-center" colspan="6">No data</td>
-                    </tr>
-                    <tr th:if="${usersPage.hasContent()}"  th:each="user : ${usersPage.content}">
+                    <tr th:each="user : ${users}">
                         <td th:text = "${user.id}">Tiger Nixon</td>
                         <td th:text = "${user.name}">System Architect</td>
                         <td  th:text = "${user.email}">Edinburgh</td>

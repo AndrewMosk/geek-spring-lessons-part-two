@@ -32,7 +32,7 @@ public class UserService {
         return repository.findAll();
     }
 
-    public Page<User> filterByAge(Integer minAge, Integer maxAge, String name, Pageable pageable) {
+    public List<User> filterByAge(Integer minAge, Integer maxAge, String name) {
         Specification<User> specification = UserSpecification.trueLiteral();
 
         if (minAge != null) {
@@ -47,7 +47,7 @@ public class UserService {
             specification = specification.and(UserSpecification.findUserByName(name));
         }
 
-        return repository.findAll(specification, pageable);
+        return repository.findAll(specification);
     }
 
     @Transactional
