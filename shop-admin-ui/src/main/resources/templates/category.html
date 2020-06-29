@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://bootadmin.net/css/fullcalendar.min.css">
     <link rel="stylesheet" href="https://bootadmin.net/css/bootadmin.min.css">
 
-    <title>Product | BootAdmin</title>
+    <title>Category | BootAdmin</title>
 </head>
 <body class="bg-light">
 
@@ -73,28 +73,15 @@
 
         <div class="card mb-4">
             <div class="card-header bg-white font-weight-bold">
-                Product Form
+                Category Form
             </div>
             <div class="card-body">
-                <form th:action="@{/product}" method="post" th:object="${product}">
+                <form th:action="@{/category}" method="post" th:object="${category}">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" th:field="*{name}" class="form-control"  placeholder="Enter name">
                         <small id="nameError" class="form-text text-error"
                                th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Validation error</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="cost">Cost</label>
-                        <input type="number" id="cost" th:field="*{cost}" class="form-control"  placeholder="Enter product cost">
-                    </div>
-                    <div class="form-group">
-                        <label for="roles">Role select</label>
-                        <select multiple class="form-control" id="roles" th:field="*{categories}" required>
-                            <option th:each="category : ${categories}"
-                                    th:text="${category.name}"
-                                    th:value="${category.id}"
-                                    th:selected="${product.categories?.contains(category)}"></option>
-                        </select>
                     </div>
                     <div class="card-footer bg-white">
                         <button type="submit" class="btn btn-primary">Submit</button>

@@ -1,142 +1,135 @@
+
 <!doctype html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
-    <title>Product list</title>
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{css/fontawesome-all.min.css}">
+    <link rel="stylesheet" th:href="@{css/bootadmin.min.css}">
+
+    <title>Products | BootAdmin</title>
 </head>
+<body class="bg-light">
 
-<body>
+<nav class="navbar navbar-expand navbar-dark bg-primary">
+    <a class="sidebar-toggle mr-3" href="#"><i class="fa fa-bars"></i></a>
+    <a class="navbar-brand" href="https://bootadmin.net">BootAdmin</a>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">EShop</a>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8080/mvc-app/product">Products</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:8080/mvc-app/user">Users</a>
+    <div class="navbar-collapse collapse">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fa fa-envelope"></i> 0</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fa fa-bell"></i> 0</a></li>
+            <li class="nav-item dropdown">
+                <a href="#" id="dd_user" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><span sec:authentication="principal.username"></span></a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd_user">
+                    <a href="#" class="dropdown-item">Profile</a>
+                    <a th:href="@{/logout}" class="dropdown-item">Logout</a>
+                </div>
             </li>
         </ul>
-
-        <form sec:authorize="isAuthenticated()" class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
-            <button class="btn btn-outline-success my-2 my-sm-0">
-                Logout <span sec:authentication="principal.username"></span>
-            </button>
-        </form>
     </div>
 </nav>
 
-<div class="container">
-    <div class="row py-2">
-        <div class="col-12">
-            <a class="btn btn-primary" th:href="@{/product/new}">Add Product</a>
-        </div>
-
-        <div class="col-12 mt-3">
-            <form>
-                <label for="minPrice">Min price</label>
-<!--                <input type="checkbox" name="minPrice" id="minPrice" th:value="${minPrice}"/>-->
-                <input type="checkbox" name="minPrice" id="minPrice"/>
-
-                <label for="maxPrice">Max price</label>
-<!--                <input type="checkbox" name="maxPrice" id="maxPrice" th:value="${maxPrice}"/>--> <!--почему-то не работает для товара-->
-                <input type="checkbox" name="maxPrice" id="maxPrice"/>
-
-                <label for="filterName">Search string</label>
-                <input type="text" name="filterName" id="filterName" th:value="${filterName}"/>
-
-                <button class="btn btn-primary" type="submit">Filter</button>
-            </form>
-        </div>
-
-        <div class="col-12">
-            <table class="table table-bordered my-2">
-                <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Cost</th>
-                    <th sec:authorize="hasAnyRole('SUPERADMIN', 'ADMIN', 'MANAGER')" scope="col">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:unless="${productsPage.hasContent()}">
-                    <td class="text-center" colspan="4">No data</td>
-                </tr>
-                <tr th:if="${productsPage.hasContent()}" th:each="product : ${productsPage.content}">
-                    <th scope="row" th:text = "${product.id}">1</th>
-                    <td th:text="${product.title}">Macbook pro 2015</td>
-                    <td th:text="${product.cost}">$2000</td>
-                    <td sec:authorize="hasAnyRole('SUPERADMIN', 'ADMIN', 'MANAGER')">
-                        <a class="btn btn-success" th:href="@{/product/edit(id=${product.id})}"><i class="fas fa-edit"></i></a>
-                        <form th:action="@{/product(id=${product.id})}" th:method="delete">
-                            <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
-                        </form>
-                    </td>
-                </tr>s
-                </tbody>
-            </table>
-        </div>
+<div class="d-flex">
+    <div class="sidebar sidebar-dark bg-dark">
+        <ul class="list-unstyled">
+            <li><a th:href="@{/role}"><i class="fa fa-fw fa-link"></i> Roles</a></li>
+            <li><a th:href="@{/user}"><i class="fa fa-fw fa-link"></i> Users</a></li>
+            <li><a th:href="@{/category}"><i class="fa fa-fw fa-link"></i> Categories</a></li>
+            <li><a th:href="@{/product}"><i class="fa fa-fw fa-link"></i> Products</a></li>
+            <li>
+                <a href="#sm_expand_1" data-toggle="collapse">
+                    <i class="fa fa-fw fa-link"></i> Expandable Menu Item
+                </a>
+                <ul id="sm_expand_1" class="list-unstyled collapse">
+                    <li><a href="#">Submenu Item</a></li>
+                    <li><a href="#">Submenu Item</a></li>
+                </ul>
+            </li>
+        </ul>
     </div>
 
-    <div class="col-12" th:if="${productsPage.hasContent()}">
-        <nav aria-label="...">
-            <ul class="pagination">
-                <li class="page-item"
-                    th:classappend="${!productsPage.hasPrevious()} ? 'disabled'">
+    <div class="content p-4">
+        <div class="text-center mb-4">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- Responsive -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4097235499795154"
+                 data-ad-slot="5211442851"
+                 data-ad-format="auto"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
 
-                    <a class="page-link"
-                       th:href="@{/product(page=${prevPageNumber}, size=${productsPage.size})}" tabindex="-1">Previous</a>
-                </li>
+        <h2 class="mb-4">Products</h2>
 
-                <li th:each="num: ${#numbers.sequence(1, productsPage.totalPages)}"
-                    th:classappend="${num == productsPage.number + 1} ? 'active'"
-                    class="page-item">
-
-                    <a class="page-link"
-                       th:text="${num}"
-                       th:href="@{/product(page=${num}, size=${productsPage.size})}">1</a>
-                </li>
-
-                <li class="page-item"
-                    th:classappend="${!productsPage.hasNext()} ? 'disabled'">
-
-                    <a class="page-link"
-                       th:href="@{/product(page=${nextPageNumber}, size=${productsPage.size})}">Next</a>
-                </li>
-            </ul>
-        </nav>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="col-12">
+                    <a class="btn btn-primary" href="/product" th:href="@{/product/new}">Add Product</a>
+                </div>
+                <table id="example" class="table table-hover" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Cost</th>
+                        <th class="actions">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="product : ${products}">
+                        <td th:text = "${product.id}">Tiger Nixon</td>
+                        <td th:text = "${product.name}">System Architect</td>
+                        <td  th:text = "${product.cost}">Edinburgh</td>
+                        <td>
+                            <a th:href="@{/product/edit(id=${product.id})}" class="btn btn-icon btn-pill btn-primary" data-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-edit"></i></a>
+                            <form th:action="@{/product(id=${product.id})}" th:method="delete">
+                                <button class="btn btn-icon btn-pill btn-danger" data-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-</body>
+<script src="https://bootadmin.net/js/jquery.min.js"></script>
+<script src="https://bootadmin.net/js/bootstrap.bundle.min.js"></script>
+<script src="https://bootadmin.net/js/datatables.min.js"></script>
+<script src="https://bootadmin.net/js/moment.min.js"></script>
+<script src="https://bootadmin.net/js/fullcalendar.min.js"></script>
+<script src="https://bootadmin.net/js/bootadmin.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118868344-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-118868344-1');
+</script>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-4097235499795154",
+        enable_page_level_ads: true
+    });
+</script>
+
+</body>
 </html>

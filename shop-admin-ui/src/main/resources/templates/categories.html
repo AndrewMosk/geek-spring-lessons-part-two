@@ -7,13 +7,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://bootadmin.net/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://bootadmin.net/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="https://bootadmin.net/css/datatables.min.css">
-    <link rel="stylesheet" href="https://bootadmin.net/css/fullcalendar.min.css">
-    <link rel="stylesheet" href="https://bootadmin.net/css/bootadmin.min.css">
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{css/fontawesome-all.min.css}">
+    <link rel="stylesheet" th:href="@{css/bootadmin.min.css}">
 
-    <title>Product | BootAdmin</title>
+    <title>Categories | BootAdmin</title>
 </head>
 <body class="bg-light">
 
@@ -69,37 +67,34 @@
             </script>
         </div>
 
-        <h2 class="mb-4">Forms</h2>
+        <h2 class="mb-4">Categories</h2>
 
         <div class="card mb-4">
-            <div class="card-header bg-white font-weight-bold">
-                Product Form
-            </div>
             <div class="card-body">
-                <form th:action="@{/product}" method="post" th:object="${product}">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" th:field="*{name}" class="form-control"  placeholder="Enter name">
-                        <small id="nameError" class="form-text text-error"
-                               th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Validation error</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="cost">Cost</label>
-                        <input type="number" id="cost" th:field="*{cost}" class="form-control"  placeholder="Enter product cost">
-                    </div>
-                    <div class="form-group">
-                        <label for="roles">Role select</label>
-                        <select multiple class="form-control" id="roles" th:field="*{categories}" required>
-                            <option th:each="category : ${categories}"
-                                    th:text="${category.name}"
-                                    th:value="${category.id}"
-                                    th:selected="${product.categories?.contains(category)}"></option>
-                        </select>
-                    </div>
-                    <div class="card-footer bg-white">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
+                <div class="col-12">
+                    <a class="btn btn-primary" href="/category" th:href="@{/category/new}">Add Category</a>
+                </div>
+                <table id="example" class="table table-hover" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th class="actions">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="category : ${categories}">
+                        <td th:text = "${category.id}">Tiger Nixon</td>
+                        <td th:text = "${category.name}">System Architect</td>
+                        <td>
+                            <a th:href="@{/category/edit(id=${category.id})}" class="btn btn-icon btn-pill btn-primary" data-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-edit"></i></a>
+                            <form th:action="@{/category(id=${category.id})}" th:method="delete">
+                                <button class="btn btn-icon btn-pill btn-danger" data-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -111,6 +106,11 @@
 <script src="https://bootadmin.net/js/moment.min.js"></script>
 <script src="https://bootadmin.net/js/fullcalendar.min.js"></script>
 <script src="https://bootadmin.net/js/bootadmin.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118868344-1"></script>
 <script>
