@@ -35,6 +35,14 @@ public class Product {
         this.cost = cost;
     }
 
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
     public Long getId() {
         return id;
     }
