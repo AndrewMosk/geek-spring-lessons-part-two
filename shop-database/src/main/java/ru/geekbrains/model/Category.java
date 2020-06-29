@@ -55,8 +55,8 @@ public class Category implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return name.equals(product.getName());
+        Category category = (Category) o;
+        return name.equals(category.name);
     }
 
     @Override
