@@ -33,10 +33,10 @@ public class SecurityConfiguration {
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
         auth.authenticationProvider(provider);
-        auth.inMemoryAuthentication()
-                .withUser("mem_user")
-                .password(passwordEncoder.encode("pass"))
-                .roles("ADMIN");
+//        auth.inMemoryAuthentication()
+//                .withUser("mem_user")
+//                .password(passwordEncoder.encode("pass"))
+//                .roles("ADMIN");
     }
 
     @Configuration
