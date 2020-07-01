@@ -42,6 +42,7 @@
             <li><a th:href="@{/role}"><i class="fa fa-fw fa-link"></i> Roles</a></li>
             <li><a th:href="@{/user}"><i class="fa fa-fw fa-link"></i> Users</a></li>
             <li><a th:href="@{/category}"><i class="fa fa-fw fa-link"></i> Categories</a></li>
+            <li><a th:href="@{/brands}"><i class="fa fa-fw fa-link"></i> Categories</a></li>
             <li><a th:href="@{/product}"><i class="fa fa-fw fa-link"></i> Products</a></li>
             <li>
                 <a href="#sm_expand_1" data-toggle="collapse">
@@ -87,6 +88,14 @@
                     <div class="form-group">
                         <label for="cost">Cost</label>
                         <input type="number" id="cost" th:field="*{cost}" class="form-control"  placeholder="Enter product cost">
+                    </div>
+                    <div class="form-group">
+                        <label for="brands">Brand</label>
+                        <select class="form-control" id="brands" th:field="*{brand}" required>
+                            <option th:each="brand : ${brands}"
+                                    th:text="${brand.name}"
+                                    th:value="${brand.id}"></option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="categories">Categories select</label>

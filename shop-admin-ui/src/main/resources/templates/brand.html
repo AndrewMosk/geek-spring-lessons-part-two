@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://bootadmin.net/css/fullcalendar.min.css">
     <link rel="stylesheet" href="https://bootadmin.net/css/bootadmin.min.css">
 
-    <title>Category | BootAdmin</title>
+    <title>Brand | BootAdmin</title>
 </head>
 <body class="bg-light">
 
@@ -74,10 +74,10 @@
 
         <div class="card mb-4">
             <div class="card-header bg-white font-weight-bold">
-                Category Form
+                Brand Form
             </div>
             <div class="card-body">
-                <form th:action="@{/category}" method="post" th:object="${category}">
+                <form th:action="@{/brand}" method="post" th:object="${brand}">
                     <input th:type="hidden" th:field="*{id}">
                     <div class="form-group">
                         <label for="name">Name</label>

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.model.Product;
+import ru.geekbrains.repo.BrandRepository;
 import ru.geekbrains.repo.CategoryRepository;
 import ru.geekbrains.service.NotFoundException;
 import ru.geekbrains.service.ProductService;
@@ -24,11 +25,13 @@ public class ProductController {
 
     private final ProductService productService;
     private final CategoryRepository categoryRepository;
+    private final BrandRepository brandRepository;
 
     @Autowired
-    public ProductController(ProductService productService, CategoryRepository categoryRepository) {
+    public ProductController(ProductService productService, CategoryRepository categoryRepository, BrandRepository brandRepository) {
         this.productService = productService;
         this.categoryRepository = categoryRepository;
+        this.brandRepository = brandRepository;
     }
 
     @GetMapping
@@ -44,6 +47,7 @@ public class ProductController {
         logger.info("create list");
         model.addAttribute("product", new Product());
         model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("brands", brandRepository.findAll());
         return "product";
     }
 
@@ -54,6 +58,7 @@ public class ProductController {
             model.addAttribute("product", productService.findById(id)
                     .orElseThrow(NotFoundException::new));
             model.addAttribute("categories", categoryRepository.findAll());
+            model.addAttribute("brands", brandRepository.findAll());
             return "product";
         }
 

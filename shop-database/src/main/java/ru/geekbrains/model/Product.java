@@ -3,6 +3,7 @@ package ru.geekbrains.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -27,13 +28,15 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
 
-    public Product() {
-    }
+    @ManyToOne(optional = false)
+    private Brand brand;
 
-    public Product(Long id, String name, BigDecimal cost) {
-        this.id = id;
-        this.name = name;
-        this.cost = cost;
+    @OneToMany(
+            mappedBy = "product",
+            fetch = FetchType.LAZY)
+    private List<Picture> picture;
+
+    public Product() {
     }
 
     public Set<Category> getCategories() {
@@ -68,6 +71,21 @@ public class Product {
         this.cost = cost;
     }
 
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public List<Picture> getPicture() {
+        return picture;
+    }
+
+    public void setPicture(List<Picture> picture) {
+        this.picture = picture;
+    }
 
     @Override
     public int hashCode() {
