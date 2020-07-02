@@ -31,6 +31,11 @@ public class Product {
     @ManyToOne(optional = false)
     private Brand brand;
 
+    @OneToMany(
+            mappedBy = "product",
+            cascade = CascadeType.ALL)
+    private List<Picture> pictures;
+
     public Product() {
     }
 
