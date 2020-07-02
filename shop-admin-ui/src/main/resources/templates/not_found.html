@@ -1,15 +1,10 @@
 <!doctype html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments/header :: head"></head>
 
 <body class="bg-light">
-
-<th:block th:if="${error}">
-    <div th:replace="fragments/header :: alert"></div>
-</th:block>
 
 <div th:replace="fragments/header :: header"></div>
 
@@ -17,11 +12,10 @@
     <div th:replace="fragments/sidebar :: sidebar"></div>
 
     <div class="content p-4">
-        <h2 class="mb-4">Blank/Starter</h2>
+        <h2 class="mb-4">Not found</h2>
 
         <div class="card mb-4">
             <div class="card-body">
-                This is a blank page you can use as a starting point.
             </div>
         </div>
     </div>
