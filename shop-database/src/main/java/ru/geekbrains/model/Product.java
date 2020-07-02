@@ -31,11 +31,6 @@ public class Product {
     @ManyToOne(optional = false)
     private Brand brand;
 
-    @OneToMany(
-            mappedBy = "product",
-            fetch = FetchType.LAZY)
-    private List<Picture> picture;
-
     public Product() {
     }
 
@@ -77,14 +72,6 @@ public class Product {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
-    }
-
-    public List<Picture> getPicture() {
-        return picture;
-    }
-
-    public void setPicture(List<Picture> picture) {
-        this.picture = picture;
     }
 
     @Override
