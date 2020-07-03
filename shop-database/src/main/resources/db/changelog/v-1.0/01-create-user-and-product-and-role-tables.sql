@@ -58,6 +58,8 @@ GO
         email varchar(255),
         name varchar(32),
         password varchar(128),
+        first_name varchar(255),
+        last_name varchar(255),
         primary key (id)
     ) engine=InnoDB
 GO

@@ -79,6 +79,14 @@ public class Product {
         this.brand = brand;
     }
 
+    public List<Picture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<Picture> pictures) {
+        this.pictures = pictures;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(name);

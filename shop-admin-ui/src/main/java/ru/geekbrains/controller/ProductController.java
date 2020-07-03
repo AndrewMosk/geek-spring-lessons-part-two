@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.controller.repr.ProductRepr;
 import ru.geekbrains.model.Product;
 import ru.geekbrains.repo.BrandRepository;
 import ru.geekbrains.repo.CategoryRepository;
@@ -15,6 +16,7 @@ import ru.geekbrains.service.ProductService;
 
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.math.BigDecimal;
 
 @RequestMapping("/product")
@@ -45,7 +47,7 @@ public class ProductController {
     @GetMapping("new")
     public String createProduct(Model model) {
         logger.info("create list");
-        model.addAttribute("product", new Product());
+        model.addAttribute("product", new ProductRepr());
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("brands", brandRepository.findAll());
         return "product";
@@ -71,7 +73,7 @@ public class ProductController {
         }
 
     @PostMapping
-    public String  saveProduct(@Valid Product product, BindingResult bindingResult) {
+    public String  saveProduct(@Valid ProductRepr product, BindingResult bindingResult) throws IOException {
         logger.info("save list");
 
         if (bindingResult.hasErrors()) {
