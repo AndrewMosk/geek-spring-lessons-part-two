@@ -1,0 +1,61 @@
+
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/header :: head"></head>
+
+<body class="bg-light">
+
+<th:block th:if="${error}">
+    <div th:replace="fragments/header :: alert"></div>
+</th:block>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="d-flex">
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <div class="content p-4">
+        <div class="text-center mb-4">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- Responsive -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4097235499795154"
+                 data-ad-slot="5211442851"
+                 data-ad-format="auto"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <h2 class="mb-4">Forms</h2>
+
+        <div class="card mb-4">
+            <div class="card-header bg-white font-weight-bold">
+                Brand Form
+            </div>
+            <div class="card-body">
+                <form th:action="@{/brand}" method="post" th:object="${brand}">
+                    <input th:type="hidden" th:field="*{id}">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" th:field="*{name}" class="form-control"  placeholder="Enter name">
+                        <small id="nameError" class="form-text text-error"
+                               th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Validation error</small>
+                    </div>
+                    <div class="card-footer bg-white">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:replace="fragments/footer :: scripts"></script>
+
+</body>
+</html>

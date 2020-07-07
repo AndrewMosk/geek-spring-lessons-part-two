@@ -1,0 +1,70 @@
+
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/header :: head"></head>
+
+<body class="bg-light">
+
+<th:block th:if="${error}">
+    <div th:replace="fragments/header :: alert"></div>
+</th:block>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="d-flex">
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <div class="content p-4">
+        <div class="text-center mb-4">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- Responsive -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4097235499795154"
+                 data-ad-slot="5211442851"
+                 data-ad-format="auto"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <h2 class="mb-4">Brands</h2>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="col-12">
+                    <a class="btn btn-primary" href="/brand" th:href="@{/brand/new}">Add Brand</a>
+                </div>
+                <table id="example" class="table table-hover" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th class="actions">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="brand : ${brands}">
+                        <td th:text = "${brand.id}">Tiger Nixon</td>
+                        <td th:text = "${brand.name}">System Architect</td>
+                        <td>
+                            <a th:href="@{/brand/edit(id=${brand.id})}" class="btn btn-icon btn-pill btn-primary" data-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-edit"></i></a>
+                            <form th:action="@{/brand(id=${brand.id})}" th:method="delete">
+                                <button class="btn btn-icon btn-pill btn-danger" data-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:replace="fragments/footer :: scripts"></script>
+
+</body>
+</html>
