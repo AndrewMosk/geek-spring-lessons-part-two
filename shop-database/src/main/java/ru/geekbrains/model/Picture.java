@@ -2,7 +2,6 @@ package ru.geekbrains.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "pictures")
@@ -27,12 +26,14 @@ public class Picture implements Serializable {
     private Product product;
 
     public Picture() {
+
     }
 
-    public Picture(String name, String contentType, PictureData pictureData) {
+    public Picture(String name, String contentType, PictureData pictureData, Product product) {
         this.name = name;
         this.contentType = contentType;
         this.pictureData = pictureData;
+        this.product = product;
     }
 
     public Long getId() {

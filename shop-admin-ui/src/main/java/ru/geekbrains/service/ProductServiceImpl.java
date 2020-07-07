@@ -71,7 +71,7 @@ public class ProductServiceImpl implements ProductService, Serializable {
                 }
 
                 product.getPictures().add(new Picture(newPicture.getOriginalFilename(),
-                        newPicture.getContentType(), new PictureData(newPicture.getBytes())));
+                        newPicture.getContentType(), new PictureData(newPicture.getBytes()), product));
             }
         }
         productRepository.save(product);
