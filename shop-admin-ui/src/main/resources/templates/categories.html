@@ -43,6 +43,7 @@
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
+                        <th>Parent</th>
                         <th class="actions">Actions</th>
                     </tr>
                     </thead>
@@ -50,6 +51,7 @@
                     <tr th:each="category : ${categories}">
                         <td th:text = "${category.id}">Tiger Nixon</td>
                         <td th:text = "${category.name}">System Architect</td>
+                        <td th:text = "${category.getParent_id()}">System Architect</td>
                         <td>
                             <a th:href="@{/category/edit(id=${category.id})}" class="btn btn-icon btn-pill btn-primary" data-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-edit"></i></a>
                             <form th:action="@{/category(id=${category.id})}" th:method="delete">

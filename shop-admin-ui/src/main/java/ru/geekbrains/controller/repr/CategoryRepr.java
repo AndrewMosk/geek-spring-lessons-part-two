@@ -10,17 +10,18 @@ public class CategoryRepr implements Serializable {
 
     private String name;
 
-    private long productCount;
+    private long parent_id;
 
-    public CategoryRepr(long id, String name, long productCount) {
+    public CategoryRepr(long id, String name, long parent_id) {
         this.id = id;
         this.name = name;
-        this.productCount = productCount;
+        this.parent_id = parent_id;
     }
 
     public CategoryRepr(Category category) {
         this.id = category.getId();
         this.name = category.getName();
+        this.parent_id = category.getParent_id();
     }
 
     public long getId() {
@@ -39,11 +40,11 @@ public class CategoryRepr implements Serializable {
         this.name = name;
     }
 
-    public long getProductCount() {
-        return productCount;
+    public long getParent_id() {
+        return parent_id;
     }
 
-    public void setProductCount(long productCount) {
-        this.productCount = productCount;
+    public void setParent_id(long parent_id) {
+        this.parent_id = parent_id;
     }
 }

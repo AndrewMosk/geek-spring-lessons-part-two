@@ -17,14 +17,22 @@ public class Category implements Serializable {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
+    @Column(name = "parent_id")
+    private Long parent_id;
+
+//    @ManyToMany(mappedBy = "categories")
+//    private List<Product> products;
+    @OneToMany(
+            mappedBy = "category",
+            cascade = CascadeType.ALL)
     private List<Product> products;
 
     public Category() {
     }
 
-    public Category(String name) {
+    public Category(String name, Long parent_id) {
         this.name = name;
+        this.parent_id = parent_id;
     }
 
     public Long getId() {
@@ -43,12 +51,20 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public List<Product> getUsers() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setUsers(List<Product> users) {
+    public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public Long getParent_id() {
+        return parent_id;
+    }
+
+    public void setParent_id(Long parent_id) {
+        this.parent_id = parent_id;
     }
 
     @Override

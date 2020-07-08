@@ -18,12 +18,24 @@
 					<div class="col-md-12">
 						<ul class="breadcrumb-tree">
 							<li><a th:href="@{/}">Home</a></li>
-							<li><a href="#">All Categories</a></li>
-<!--							<li><a href="#" th:text="${product.category.name}">Accessories</a></li>-->
-<!--							<li><a href="#">Headphones</a></li>-->
-							<li class="active" th:text="${product.name}">Product name goes here</li>
+						</ul>
+						<ul class="breadcrumb-tree" th:each="cat : ${categories}">
+							<li><a href="#" th:text="${cat.name}"></a></li>
+						</ul>
+						<ul class="breadcrumb-tree">
+							<li class="active" th:text="${product.name}"></li>
 						</ul>
 					</div>
+
+<!--					<div class="col-md-12">-->
+<!--						<ul class="breadcrumb-tree">-->
+<!--							<li><a th:href="@{/}">Home</a></li>-->
+<!--							<li><a href="#"  >All Categories</a></li>-->
+<!--							<li><a href="#" >Accessories</a></li>-->
+<!--							<li><a href="#">Headphones</a></li>-->
+<!--							<li class="active" th:text="${product.name}">Product name goes here</li>-->
+<!--						</ul>-->
+<!--					</div>-->
 				</div>
 				<!-- /row -->
 			</div>
