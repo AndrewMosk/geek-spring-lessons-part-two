@@ -104,31 +104,20 @@
 								</label>
 							</div>
 
-<!--							<div class="add-to-cart">-->
-<!--								<div class="qty-label">-->
-<!--									Qty-->
-<!--									<div class="input-number">-->
-<!--										<input type="number">-->
-<!--										<span class="qty-up">+</span>-->
-<!--										<span class="qty-down">-</span>-->
-<!--									</div>-->
-<!--								</div>-->
-<!--								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>-->
-<!--							</div>-->
-
 							<form class="form-horizontal qtyFrm" th:action="@{/cart}" method="post">
-								<input type="hidden" name="productId" th:value="${product.id}"/>
-
-								<div class="form-group">
-									<label class="control-label col-md-6">
-										<span>$<span th:text="${product.cost}" th:remove="tag">$140.00</span></span>
-									</label>
-									<div class="col-md-6">
-										<input type="number" name="qty" class="form-control" placeholder="Qty.">
+								<div class="add-to-cart">
+									<input type="hidden" name="productId" th:value="${product.id}"/>
+									<div class="qty-label">
+										Qty
+										<div class="input-number">
+											<input type="number" name="qty" class="form-control" placeholder="Qty.">
+											<span class="qty-up">+</span>
+											<span class="qty-down">-</span>
+										</div>
 									</div>
-								</div>
 
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>-->
+									<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+								</div>
 							</form>
 
 							<ul class="product-btns">

@@ -16,10 +16,10 @@
 				<!-- row -->
 				<div class="row">
 					<div class="col-md-12">
-						<h3 class="breadcrumb-header">Regular Page</h3>
+						<h3 class="breadcrumb-header">Cart Page</h3>
 						<ul class="breadcrumb-tree">
-							<li><a href="#">Home</a></li>
-							<li class="active">Blank</li>
+							<li><a th:href="@{/}">Home</a></li>
+							<li><a th:href="@{/cart}">Cart</a></li>
 						</ul>
 					</div>
 				</div>
@@ -58,9 +58,9 @@
 								</thead>
 								<tbody>
 								<tr th:each="lineItem : ${lineItems}">
-									<td><img width="100" th:src="@{/picture/{id}(id=${lineItem.productRepr.getPictures()[0].getId()})}" alt="">
-									</td>
-
+									<td><img width="100" th:src="@{/picture/{id}(id=${lineItem.productRepr.getPictures()[0].getId()})}" alt=""></td>
+									<td>-</td>
+									<td>-</td>
 									<td><span class="shopBtn"><span class="icon-ok"></span></span></td>
 									<td>$<span th:text="${lineItem.productRepr.cost}" th:remove="tag">$50.00</span></td>
 									<td>
@@ -112,12 +112,12 @@
 									<td>
 										<form>
 											<div class="form-group">
-												<label class="col-md-2 control-label" for="inputEmail">Country</label>
-												<input type="text" placeholder="Country">
+												<label class="col-md-2 control-label" for="inputCountry">Country</label>
+												<input type="text" placeholder="Country" id="inputCountry">
 											</div>
 											<div class="form-group">
-												<label class="col-md-2 control-label" for="inputPassword">Post Code/ Zipcode</label>
-												<input type="password" placeholder="Password">
+												<label class="col-md-2 control-label" for="inputZipcode">Post Code/ Zipcode</label>
+												<input type="text" placeholder="Zipcode" id="inputZipcode">
 											</div>
 											<div class="form-group">
 												<button type="submit" class="shopBtn">Click to check the price</button>
@@ -127,7 +127,7 @@
 								</tr>
 								</tbody>
 							</table>
-							<a th:href="@{products}" class="shopBtn btn-lg"><span class="icon-arrow-left"></span> Continue
+							<a th:href="@{store}" class="shopBtn btn-lg"><span class="icon-arrow-left"></span> Continue
 								Shopping </a>
 							<a th:href="@{login}" class="shopBtn btn-lg pull-right">Next <span
 									class="icon-arrow-right"></span></a>
