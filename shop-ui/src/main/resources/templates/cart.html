@@ -68,6 +68,8 @@
 											   size="16"  th:value="${lineItem.qty}">
 
                                         <form th:object="${lineItem}" th:action="@{/cart}" th:method="delete">
+											<input type="hidden" name="productId" th:value="${lineItem.productId}">
+											<input type="hidden" name="qty" th:value="${lineItem.getQty()}"/>
 											<button class="btn btn-xs btn-danger" type="submit">
 												<span class="icon-remove"></span>
 											</button>

@@ -83,6 +83,11 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void updateCart(LineItem lineItem) {
-        lineItems.put(lineItem, lineItem.getQty());
+        int qty = 0;
+        if (lineItems.containsKey(lineItem)) {
+            qty = lineItems.get(lineItem);
+        }
+
+        lineItems.put(lineItem, qty + lineItem.getQty());
     }
 }
