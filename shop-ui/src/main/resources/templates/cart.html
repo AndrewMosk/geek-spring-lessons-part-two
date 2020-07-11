@@ -64,14 +64,10 @@
 									<td><span class="shopBtn"><span class="icon-ok"></span></span></td>
 									<td>$<span th:text="${lineItem.productRepr.cost}" th:remove="tag">$50.00</span></td>
 									<td>
-										<input style="max-width:34px" id="appendedInputButtons"
-											   size="16" type="text" th:value="${lineItem.qty}">
+										<input type="number" style="max-width:34px" id="appendedInputButtons"
+											   size="16"  th:value="${lineItem.qty}">
 
-										<div class="input-append">
-											<button class="btn btn-xs" type="button">-</button>
-											<button class="btn btn-xs" type="button"> +</button>
-										</div>
-										<form th:object="${lineItem}" th:action="@{/cart}" th:method="delete">
+                                        <form th:object="${lineItem}" th:action="@{/cart}" th:method="delete">
 											<button class="btn btn-xs btn-danger" type="submit">
 												<span class="icon-remove"></span>
 											</button>
