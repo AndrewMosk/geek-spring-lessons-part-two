@@ -7,11 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.geekbrains.controller.repr.ProductRepr;
 import ru.geekbrains.repo.BrandRepository;
 import ru.geekbrains.repo.CategoryRepository;
 import ru.geekbrains.service.ProductService;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -35,9 +37,17 @@ public class ProductsController {
     }
 
     @GetMapping("/store")
-    public String adminProductsPage(Model model) {
+    public String adminProductsPage(@RequestParam("category") String  cat_name, Model model) {
         model.addAttribute("activePage", "Products");
-        model.addAttribute("products", productService.findAll());
+        List<ProductRepr> productReprs;
+
+        if (cat_name.equals("All")) {
+            productReprs = productService.findAll();
+        } else {
+            productReprs = productService.findByCatName(cat_name);
+        }
+
+        model.addAttribute("products", productReprs);
         return "store";
     }
 

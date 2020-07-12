@@ -45,4 +45,11 @@ public class ProductServiceImpl implements ProductService, Serializable {
         return productRepository.findById(id).map(ProductRepr::new);
     }
 
+    @Override
+    public List<ProductRepr> findByCatName(String  cat_name) {
+        return productRepository.findProductByCategory_Name(cat_name).stream()
+                .map(ProductRepr::new)
+                .collect(Collectors.toList());
+    }
+
 }

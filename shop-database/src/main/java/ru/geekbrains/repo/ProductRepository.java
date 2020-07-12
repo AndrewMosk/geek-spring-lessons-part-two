@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 
 @Repository
@@ -31,4 +32,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByMinAndMaxPrice(Pageable pageable);
 
     Page<Product> findByNameContains(@NotBlank String name, Pageable pageable);
+
+    List<Product> findProductByCategory_Name(String category_name);
 }
