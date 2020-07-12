@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.geekbrains.controller.repr.ProductRepr;
+import ru.geekbrains.model.Category;
 import ru.geekbrains.repo.BrandRepository;
 import ru.geekbrains.repo.CategoryRepository;
 import ru.geekbrains.service.ProductService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,8 +48,16 @@ public class ProductsController {
         } else {
             productReprs = productService.findByCatName(cat_name);
         }
-
         model.addAttribute("products", productReprs);
+
+        List<Category> categories;
+        if (cat_name.equals("All")) {
+            categories = new ArrayList<>();
+        } else {
+            Category category = categoryRepository.findByName(cat_name);
+            categories = categoryRepository.findCategoryWithParents(category.getId());
+        }
+        model.addAttribute("categories", categories);
         return "store";
     }
 

@@ -28,4 +28,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             ")\n" +
             "select * from cte order by id;", nativeQuery = true)
     List<Category> findCategoryWithParents(Long id);
+
+    Category findByName(String name);
 }

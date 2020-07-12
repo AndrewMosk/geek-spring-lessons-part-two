@@ -1,5 +1,6 @@
 package ru.geekbrains.repo;
 
+import ru.geekbrains.model.Category;
 import ru.geekbrains.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,5 +34,29 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Page<Product> findByNameContains(@NotBlank String name, Pageable pageable);
 
-    List<Product> findProductByCategory_Name(String category_name);
+    //List<Product> findProductByCategory_Name(String category_name);
+
+    @Query(value = "select * from products where category_id in ( select id from ( \n" +
+            "with recursive cte (id, name, parent_id) as (   select\n" +
+            "        id,\n" +
+            "        name,\n" +
+            "        parent_id   \n" +
+            "    from\n" +
+            "        categories   \n" +
+            "    where\n" +
+            "        name = ?1" +
+            "    union\n" +
+            "    all   select\n" +
+            "        c.id,\n" +
+            "        c.name,\n" +
+            "        c.parent_id   \n" +
+            "    from\n" +
+            "        categories c   \n" +
+            "    inner join\n" +
+            "        cte           \n" +
+            "            on c.parent_id = cte.id ) select\n" +
+            "            * \n" +
+            "    from\n" +
+            "        cte order by id) as c)", nativeQuery = true)
+    List<Product> ProductByCategory_Name_Hierarchy(String category_name);
 }

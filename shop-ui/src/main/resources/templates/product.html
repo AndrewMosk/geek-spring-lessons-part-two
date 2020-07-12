@@ -20,7 +20,7 @@
 							<li><a th:href="@{/}">Home</a></li>
 						</ul>
 						<ul class="breadcrumb-tree" th:each="cat : ${categories}">
-							<li><a href="#" th:text="${cat.name}"></a></li>
+							<li><a th:href="@{/store(category=${cat.name})}" th:text="${cat.name}"></a></li>
 						</ul>
 						<ul class="breadcrumb-tree">
 							<li class="active" th:text="${product.name}"></li>

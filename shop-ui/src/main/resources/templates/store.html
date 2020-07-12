@@ -18,10 +18,10 @@
 			<div class="col-md-12">
 				<ul class="breadcrumb-tree">
 					<li><a th:href="@{/}">Home</a></li>
-					<li><a href="#">All Categories</a></li>
-<!--					<ul class="breadcrumb-tree" th:each="cat : ${categories}">-->
-<!--						<li><a href="#" th:text="${cat.name}"></a></li>-->
-<!--					</ul>-->
+					<li><a th:href="@{/store(category=${'All'})}">All Categories</a></li>
+					<ul class="breadcrumb-tree" th:each="cat : ${categories}">
+						<li><a th:href="@{/store(category=${cat.name})}" th:text="${cat.name}"></a></li>
+					</ul>
 				</ul>
 			</div>
 		</div>
