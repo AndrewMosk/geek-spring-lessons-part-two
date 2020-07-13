@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService, Serializable {
         Product product = (productRepr.getId() != null) ? productRepository.findById(productRepr.getId())
                 .orElseThrow(NotFoundException::new) : new Product();
         product.setName(productRepr.getName());
-        product.setCategories(productRepr.getCategories());
+        product.setCategory(productRepr.getCategory());
         product.setBrand(productRepr.getBrand());
         product.setCost(productRepr.getCost());
         if (productRepr.getNewPictures() != null) {

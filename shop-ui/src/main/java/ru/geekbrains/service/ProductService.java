@@ -14,4 +14,5 @@ public interface ProductService {
 
     Optional<ProductRepr> findById(Long id);
 
+    List<ProductRepr> findByCatName(String cat_name);
 }

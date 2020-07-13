@@ -46,6 +46,12 @@
                         <small id="nameError" class="form-text text-error"
                                th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Validation error</small>
                     </div>
+                    <div class="form-group">
+                        <label for="parent_id">Parent id</label>
+                        <input type="text" id="parent_id" th:field="*{parent_id}" class="form-control"  placeholder="Enter parent_id">
+                        <small id="parent_id_Error" class="form-text text-error"
+                               th:if="${#fields.hasErrors('parent_id')}" th:errors="*{parent_id}">Validation error</small>
+                    </div>
                     <div class="card-footer bg-white">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>

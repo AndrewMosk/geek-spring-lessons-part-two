@@ -18,12 +18,24 @@
 					<div class="col-md-12">
 						<ul class="breadcrumb-tree">
 							<li><a th:href="@{/}">Home</a></li>
-							<li><a href="#">All Categories</a></li>
-<!--							<li><a href="#" th:text="${product.category.name}">Accessories</a></li>-->
-<!--							<li><a href="#">Headphones</a></li>-->
-							<li class="active" th:text="${product.name}">Product name goes here</li>
+						</ul>
+						<ul class="breadcrumb-tree" th:each="cat : ${categories}">
+							<li><a th:href="@{/store(category=${cat.name})}" th:text="${cat.name}"></a></li>
+						</ul>
+						<ul class="breadcrumb-tree">
+							<li class="active" th:text="${product.name}"></li>
 						</ul>
 					</div>
+
+<!--					<div class="col-md-12">-->
+<!--						<ul class="breadcrumb-tree">-->
+<!--							<li><a th:href="@{/}">Home</a></li>-->
+<!--							<li><a href="#"  >All Categories</a></li>-->
+<!--							<li><a href="#" >Accessories</a></li>-->
+<!--							<li><a href="#">Headphones</a></li>-->
+<!--							<li class="active" th:text="${product.name}">Product name goes here</li>-->
+<!--						</ul>-->
+<!--					</div>-->
 				</div>
 				<!-- /row -->
 			</div>
@@ -92,17 +104,21 @@
 								</label>
 							</div>
 
-							<div class="add-to-cart">
-								<div class="qty-label">
-									Qty
-									<div class="input-number">
-										<input type="number">
-										<span class="qty-up">+</span>
-										<span class="qty-down">-</span>
+							<form class="form-horizontal qtyFrm" th:action="@{/cart}" method="post">
+								<div class="add-to-cart">
+									<input type="hidden" name="productId" th:value="${product.id}"/>
+									<div class="qty-label">
+										Qty
+										<div class="input-number" >
+											<input type="number" name="qty" class="form-control" placeholder="Qty." value="1">
+											<span class="qty-up">+</span>
+											<span class="qty-down">-</span>
+										</div>
 									</div>
+
+									<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
 								</div>
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-							</div>
+							</form>
 
 							<ul class="product-btns">
 								<li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>

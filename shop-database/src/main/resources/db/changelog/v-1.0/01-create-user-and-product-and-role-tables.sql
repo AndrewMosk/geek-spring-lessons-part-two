@@ -8,10 +8,11 @@ GO
     create table categories (
        id bigint not null auto_increment,
         name varchar(255) not null,
+        parent_id bigint,
         primary key (id)
     ) engine=InnoDB
-GO 
-    
+GO
+
     create table pictures (
        id bigint not null auto_increment,
         content_type varchar(255) not null,
@@ -34,14 +35,8 @@ GO
         cost decimal(19,2),
         name varchar(64),
         brand_id bigint not null,
-        primary key (id)
-    ) engine=InnoDB
-GO
-
-    create table products_categories (
-       product_id bigint not null,
         category_id bigint not null,
-        primary key (product_id, category_id)
+        primary key (id)
     ) engine=InnoDB
 GO
 
@@ -56,10 +51,10 @@ GO
        id bigint not null auto_increment,
         age integer,
         email varchar(255),
-        name varchar(32),
-        password varchar(128),
         first_name varchar(255),
         last_name varchar(255),
+        name varchar(32),
+        password varchar(128),
         primary key (id)
     ) engine=InnoDB
 GO
@@ -105,16 +100,10 @@ GO
        references brands (id)
 GO
 
-    alter table products_categories
-       add constraint FKqt6m2o5dly3luqcm00f5t4h2p
+    alter table products
+       add constraint FKog2rp4qthbtt2lfyhfo32lsw9
        foreign key (category_id)
        references categories (id)
-GO
-
-    alter table products_categories
-       add constraint FKtj1vdea8qwerbjqie4xldl1el
-       foreign key (product_id)
-       references products (id)
 GO
 
     alter table users_roles
@@ -127,3 +116,4 @@ GO
        add constraint FK2o0jvgh89lemvvo17cbqvdxaa
        foreign key (user_id)
        references users (id)
+GO

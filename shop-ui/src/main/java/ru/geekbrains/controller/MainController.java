@@ -30,10 +30,4 @@ public class MainController {
         model.addAttribute("activePage", "None");
         return "product";
     }
-
-    @RequestMapping("/store")
-    public String store(Model model) {
-        model.addAttribute("activePage", "None");
-        return "store";
-    }
 }

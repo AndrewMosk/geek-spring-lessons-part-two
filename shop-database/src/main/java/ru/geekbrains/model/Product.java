@@ -22,11 +22,13 @@ public class Product {
     @Column(length = 32)
     private BigDecimal cost;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "products_categories",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories;
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "products_categories",
+//            joinColumns = @JoinColumn(name = "product_id"),
+//            inverseJoinColumns = @JoinColumn(name = "category_id"))
+//    private Set<Category> categories;
+    @ManyToOne(optional = false)
+    private Category category;
 
     @ManyToOne(optional = false)
     private Brand brand;
@@ -39,12 +41,12 @@ public class Product {
     public Product() {
     }
 
-    public Set<Category> getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Long getId() {

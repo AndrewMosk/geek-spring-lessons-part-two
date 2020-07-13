@@ -18,9 +18,10 @@
 			<div class="col-md-12">
 				<ul class="breadcrumb-tree">
 					<li><a th:href="@{/}">Home</a></li>
-					<li><a href="#">All Categories</a></li>
-					<li><a href="#">Accessories</a></li>
-					<li class="active">Headphones (227,490 Results)</li>
+					<li><a th:href="@{/store(category=${'All'})}">All Categories</a></li>
+					<ul class="breadcrumb-tree" th:each="cat : ${categories}">
+						<li><a th:href="@{/store(category=${cat.name})}" th:text="${cat.name}"></a></li>
+					</ul>
 				</ul>
 			</div>
 		</div>
@@ -38,67 +39,67 @@
 		<div class="row">
 			<!-- ASIDE -->
 			<div id="aside" class="col-md-3">
-				<!-- aside Widget -->
-				<div class="aside">
-					<h3 class="aside-title">Categories</h3>
-					<div class="checkbox-filter">
+<!--				&lt;!&ndash; aside Widget &ndash;&gt;-->
+<!--				<div class="aside">-->
+<!--					<h3 class="aside-title">Categories</h3>-->
+<!--					<div class="checkbox-filter">-->
 
-						<div class="input-checkbox">
-							<input type="checkbox" id="category-1">
-							<label for="category-1">
-								<span></span>
-								Laptops
-								<small>(120)</small>
-							</label>
-						</div>
+<!--						<div class="input-checkbox">-->
+<!--							<input type="checkbox" id="category-1">-->
+<!--							<label for="category-1">-->
+<!--								<span></span>-->
+<!--								Laptops-->
+<!--								<small>(120)</small>-->
+<!--							</label>-->
+<!--						</div>-->
 
-						<div class="input-checkbox">
-							<input type="checkbox" id="category-2">
-							<label for="category-2">
-								<span></span>
-								Smartphones
-								<small>(740)</small>
-							</label>
-						</div>
+<!--						<div class="input-checkbox">-->
+<!--							<input type="checkbox" id="category-2">-->
+<!--							<label for="category-2">-->
+<!--								<span></span>-->
+<!--								Smartphones-->
+<!--								<small>(740)</small>-->
+<!--							</label>-->
+<!--						</div>-->
 
-						<div class="input-checkbox">
-							<input type="checkbox" id="category-3">
-							<label for="category-3">
-								<span></span>
-								Cameras
-								<small>(1450)</small>
-							</label>
-						</div>
+<!--						<div class="input-checkbox">-->
+<!--							<input type="checkbox" id="category-3">-->
+<!--							<label for="category-3">-->
+<!--								<span></span>-->
+<!--								Cameras-->
+<!--								<small>(1450)</small>-->
+<!--							</label>-->
+<!--						</div>-->
 
-						<div class="input-checkbox">
-							<input type="checkbox" id="category-4">
-							<label for="category-4">
-								<span></span>
-								Accessories
-								<small>(578)</small>
-							</label>
-						</div>
+<!--						<div class="input-checkbox">-->
+<!--							<input type="checkbox" id="category-4">-->
+<!--							<label for="category-4">-->
+<!--								<span></span>-->
+<!--								Accessories-->
+<!--								<small>(578)</small>-->
+<!--							</label>-->
+<!--						</div>-->
 
-						<div class="input-checkbox">
-							<input type="checkbox" id="category-5">
-							<label for="category-5">
-								<span></span>
-								Laptops
-								<small>(120)</small>
-							</label>
-						</div>
+<!--						<div class="input-checkbox">-->
+<!--							<input type="checkbox" id="category-5">-->
+<!--							<label for="category-5">-->
+<!--								<span></span>-->
+<!--								Laptops-->
+<!--								<small>(120)</small>-->
+<!--							</label>-->
+<!--						</div>-->
 
-						<div class="input-checkbox">
-							<input type="checkbox" id="category-6">
-							<label for="category-6">
-								<span></span>
-								Smartphones
-								<small>(740)</small>
-							</label>
-						</div>
-					</div>
-				</div>
-				<!-- /aside Widget -->
+<!--						<div class="input-checkbox">-->
+<!--							<input type="checkbox" id="category-6">-->
+<!--							<label for="category-6">-->
+<!--								<span></span>-->
+<!--								Smartphones-->
+<!--								<small>(740)</small>-->
+<!--							</label>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--				&lt;!&ndash; /aside Widget &ndash;&gt;-->
 
 				<!-- aside Widget -->
 				<div class="aside">
@@ -267,9 +268,7 @@
 
 							<div class="product-body">
 <!--								<p class="product-category" th:text="${prod.category.name}">Category</p>-->
-								<div class="card" th:each="cat : ${prod.getCategories()}">
-									<p class="product-category" th:text="${cat.name}">Category</p>
-								</div>
+								<p class="product-category" th:text="${prod.getCategory().name}">Category</p>
 								<h3 class="product-name"><a th:href="@{/product/{id}/view(id=${prod.id})}" target="_blank" th:text="${prod.name}">product name</a></h3>
 								<h4 class="product-price" th:text="${prod.getCost()}">$980.00 <del class="product-old-price">$990.00</del></h4>
 								<div class="product-rating">
@@ -286,7 +285,13 @@
 								</div>
 							</div>
 							<div class="add-to-cart">
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+								<form th:action="@{/cart}" method="post">
+									<input type="hidden" name="qty" value="1"/>
+									<input type="hidden" name="productId" th:value="${prod.id}">
+
+									<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+								</form>
+
 							</div>
 						</div>
 					</div>
