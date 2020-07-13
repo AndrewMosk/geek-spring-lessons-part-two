@@ -40,23 +40,21 @@ public class ProductsController {
 
     @GetMapping("/store")
     public String adminProductsPage(@RequestParam("category") String  cat_name, Model model) {
-        model.addAttribute("activePage", "Products");
+        //model.addAttribute("activePage", "Products");
         List<ProductRepr> productReprs;
+        List<Category> categories;
 
         if (cat_name.equals("All")) {
             productReprs = productService.findAll();
-        } else {
-            productReprs = productService.findByCatName(cat_name);
-        }
-        model.addAttribute("products", productReprs);
-
-        List<Category> categories;
-        if (cat_name.equals("All")) {
             categories = new ArrayList<>();
         } else {
+            productReprs = productService.findByCatName(cat_name);
+
             Category category = categoryRepository.findByName(cat_name);
             categories = categoryRepository.findCategoryWithParents(category.getId());
         }
+
+        model.addAttribute("products", productReprs);
         model.addAttribute("categories", categories);
         return "store";
     }
