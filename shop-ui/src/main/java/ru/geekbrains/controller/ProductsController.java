@@ -38,53 +38,6 @@ public class ProductsController {
         this.brandRepository = brandRepository;
     }
 
-//    @GetMapping("/store")
-//    public String adminProductsPage(@RequestParam(name = "category", required = false) String  cat_name,
-//                                    @ModelAttribute(value="foo") Foo foo,
-//                                    Model model) {
-//
-//        // как на мой взгляд должна работать фильтрация по производителям с помощью чекбоксов:
-//        // каждый раз при нажатии на чек бокс из этого блока, нужно "проходить" по всем и присылать на сервер выбранные
-//        // искать в бд нужные товары
-//        // отправлять список выбранных производителей обратно, чтоб правильно расставить чекбоксы
-//
-////        List<String> checkedBrands = new ArrayList<>();
-////        checkedBrands.add("Sony");
-////        checkedBrands.add("DELL");
-//
-//
-//
-//        //List<Brand> brands;
-//
-//        Object object = model.getAttribute("brands");
-//        List<ProductRepr> productReprs;
-//        List<Category> categories;
-//
-//        if (cat_name == null) {
-//            productReprs = productService.findAll();
-//            categories = new ArrayList<>();
-//        } else {
-//            productReprs = productService.findByCatName(cat_name);
-//
-//            Category category = categoryRepository.findByName(cat_name);
-//            categories = categoryRepository.findCategoryWithParents(category.getId());
-//        }
-//
-//
-//        model.addAttribute("products", productReprs);            // товары
-//        model.addAttribute("categories", categories);            // иерархический список категорий (от младшей к старшей)
-//        model.addAttribute("category", cat_name);                // младшая категория (та, которая выбрана)
-//        model.addAttribute("brands", brandRepository.findAll()); // все производители (позже нужно сделать, чтоб отображались по категориям)
-//        //model.addAttribute("checked_brands", checkedBrands);     // производители, выделенные для фильтрации
-//
-//        Map<Brand, String > brands;
-//        brands = brandRepository.findAll().stream().collect(Collectors.toMap(br -> br, Brand::getName));
-//
-//        String confirm1 = "on";
-//        model.addAttribute("confirm1", confirm1);
-//        return "store";
-//    }
-
     @GetMapping("/store")
     public String storePage(
                             @RequestParam(name = "category", required = false) String  cat_name,
@@ -123,7 +76,6 @@ public class ProductsController {
         List<ProductRepr> productReprs;
         List<Category> categories;
 
-
         List<String> brandsFilter = selectedFilters.getBrands().stream().map(Brand::getName).collect(Collectors.toList());
         String cat_name = selectedFilters.getCategory();
 
@@ -144,7 +96,6 @@ public class ProductsController {
             productReprs = productService.findProductByBrand(selectedFilters.getBrands());
             categories = new ArrayList<>();
         }
-
 
         model.addAttribute("products", productReprs);
         model.addAttribute("categories", categories);
