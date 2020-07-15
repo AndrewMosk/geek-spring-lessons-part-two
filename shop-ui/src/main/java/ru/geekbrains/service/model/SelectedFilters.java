@@ -5,12 +5,13 @@ import ru.geekbrains.model.Brand;
 import java.util.List;
 import java.util.Map;
 
-public class SelectedBrands {
+public class SelectedFilters {
 
     private int id;
     private List<Brand> brands;
+    private String category;
 
-    public SelectedBrands(int id) {
+    public SelectedFilters(int id) {
         this.id = id;
     }
 
@@ -28,5 +29,13 @@ public class SelectedBrands {
 
     public void setBrands(List<Brand> brands) {
         this.brands = brands;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

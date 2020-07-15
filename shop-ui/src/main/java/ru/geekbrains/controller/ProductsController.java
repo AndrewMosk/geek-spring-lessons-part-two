@@ -12,11 +12,10 @@ import ru.geekbrains.model.Category;
 import ru.geekbrains.repo.BrandRepository;
 import ru.geekbrains.repo.CategoryRepository;
 import ru.geekbrains.service.ProductService;
-import ru.geekbrains.service.model.SelectedBrands;
+import ru.geekbrains.service.model.SelectedFilters;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -96,6 +95,7 @@ public class ProductsController {
         if (cat_name == null) {
             productReprs = productService.findAll();
             categories = new ArrayList<>();
+            cat_name = "";
         } else {
             productReprs = productService.findByCatName(cat_name);
 
@@ -108,26 +108,53 @@ public class ProductsController {
         model.addAttribute("category", cat_name);                // младшая категория (та, которая выбрана)
         model.addAttribute("selectableBrands", brandRepository.findAll()); // все производители (позже нужно сделать, чтоб отображались по категориям)
 
-        SelectedBrands selectedBrands = new SelectedBrands(1);
-        selectedBrands.setBrands(new ArrayList<>());
+        SelectedFilters selectedFilters = new SelectedFilters(1);
+        selectedFilters.setBrands(new ArrayList<>());
+        selectedFilters.setCategory(cat_name);
 
-        model.addAttribute("selectedBrands", selectedBrands);
+        model.addAttribute("selectedFilters", selectedFilters);
         return "store";
     }
 
     @PostMapping("/store")
-    public String  postBrands(@ModelAttribute("selectedBrands") SelectedBrands selectedBrands,
-                              @ModelAttribute("category") String  cat_name,
+    public String postBrands(@ModelAttribute("selectedFilters") SelectedFilters selectedFilters,
                               Model model) {
 
-        model.addAttribute("selectedBrands", selectedBrands);
+        List<ProductRepr> productReprs;
+        List<Category> categories;
+
+
+        List<String> brandsFilter = selectedFilters.getBrands().stream().map(Brand::getName).collect(Collectors.toList());
+        String cat_name = selectedFilters.getCategory();
+
+        if (brandsFilter.isEmpty() && cat_name.isEmpty()) {
+            productReprs = productService.findAll();
+            categories = new ArrayList<>();
+        } else if (!brandsFilter.isEmpty() && !cat_name.isEmpty()) {
+            productReprs = productService.findByCatNameAndBrands(cat_name, brandsFilter);
+
+            Category category = categoryRepository.findByName(cat_name);
+            categories = categoryRepository.findCategoryWithParents(category.getId());
+        } else if (!cat_name.isEmpty()) {
+            productReprs = productService.findByCatName(cat_name);
+
+            Category category = categoryRepository.findByName(cat_name);
+            categories = categoryRepository.findCategoryWithParents(category.getId());
+        } else {
+            productReprs = productService.findProductByBrand(selectedFilters.getBrands());
+            categories = new ArrayList<>();
+        }
+
+
+        model.addAttribute("products", productReprs);
+        model.addAttribute("categories", categories);
+        model.addAttribute("selectedFilters", selectedFilters);
         model.addAttribute("selectableBrands", brandRepository.findAll());
         return "store";
     }
 
     @GetMapping("/product/{id}/view")
     public String adminEditProduct(Model model, @PathVariable("id") Long id) {
-//        model.addAttribute("edit", true);
         model.addAttribute("activePage", "Products");
         model.addAttribute("product", productService.findById(id).orElseThrow(NotFoundException::new));
 
@@ -137,11 +164,6 @@ public class ProductsController {
             model.addAttribute("categories", categoryRepository.findCategoryWithParents(productRepr.getCategory().getId()));
         }
 
-//        model.addAttribute("categories", categoryRepository.findAll());
-//        model.addAttribute("brands", brandRepository.findAll());
         return "product";
     }
-
-
-
 }
