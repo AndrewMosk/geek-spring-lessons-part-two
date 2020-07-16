@@ -2,7 +2,7 @@ let stompClient = null;
 let username = 'noname';
 
 function connect() {
-    let socket = new SockJS('/gs-guide-websocket');
+    let socket = new SockJS('/shop/gs-guide-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
