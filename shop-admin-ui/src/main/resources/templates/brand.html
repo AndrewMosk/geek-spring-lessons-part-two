@@ -43,6 +43,17 @@
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" th:field="*{name}" class="form-control"  placeholder="Enter name">
+
+                        <div class="form-group">
+                            <label for="categories">Category select</label>
+                            <select multiple class="form-control" id="categories" th:field="*{categories}" required>
+                                <option th:each="category : ${categories}"
+                                        th:text="${category.name}"
+                                        th:value="${category.id}"
+                                        th:selected="${brand.categories?.contains(category)}"></option>
+                            </select>
+                        </div>
+
                         <small id="nameError" class="form-text text-error"
                                th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Validation error</small>
                     </div>

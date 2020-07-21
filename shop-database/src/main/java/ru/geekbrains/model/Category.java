@@ -20,12 +20,15 @@ public class Category implements Serializable {
     @Column(name = "parent_id")
     private Long parent_id;
 
-//    @ManyToMany(mappedBy = "categories")
-//    private List<Product> products;
+
     @OneToMany(
             mappedBy = "category",
             cascade = CascadeType.ALL)
     private List<Product> products;
+
+    @ManyToMany(mappedBy = "categories")
+    private List<Brand> brands;
+
 
     public Category() {
     }
@@ -65,6 +68,14 @@ public class Category implements Serializable {
 
     public void setParent_id(Long parent_id) {
         this.parent_id = parent_id;
+    }
+
+    public List<Brand> getBrands() {
+        return brands;
+    }
+
+    public void setBrands(List<Brand> brands) {
+        this.brands = brands;
     }
 
     @Override

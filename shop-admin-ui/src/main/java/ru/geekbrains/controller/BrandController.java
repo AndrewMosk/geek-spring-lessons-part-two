@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import ru.geekbrains.model.Brand;
 import ru.geekbrains.repo.BrandRepository;
+import ru.geekbrains.repo.CategoryRepository;
 import ru.geekbrains.service.NotFoundException;
 
 import javax.validation.Valid;
@@ -20,10 +21,12 @@ public class BrandController {
     private static final Logger logger = LoggerFactory.getLogger(BrandController.class);
 
     private final BrandRepository brandRepository;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public BrandController(BrandRepository brandRepository) {
+    public BrandController(BrandRepository brandRepository, CategoryRepository categoryRepository) {
         this.brandRepository = brandRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping
@@ -40,6 +43,7 @@ public class BrandController {
         logger.info("Create brand form");
 
         model.addAttribute("brand", new Brand());
+        model.addAttribute("categories", categoryRepository.findAll());
         return "brand";
     }
 
@@ -49,6 +53,7 @@ public class BrandController {
 
         model.addAttribute("brand", brandRepository.findById(id)
                 .orElseThrow(NotFoundException::new));
+        model.addAttribute("categories", categoryRepository.findAll());
         return "brand";
     }
 
