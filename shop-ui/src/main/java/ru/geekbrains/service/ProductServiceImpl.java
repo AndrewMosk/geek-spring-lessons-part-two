@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ru.geekbrains.controller.repr.ProductRepr;
+import ru.geekbrains.model.Brand;
 import ru.geekbrains.model.Picture;
 import ru.geekbrains.model.PictureData;
 import ru.geekbrains.model.Product;
@@ -48,6 +49,20 @@ public class ProductServiceImpl implements ProductService, Serializable {
     @Override
     public List<ProductRepr> findByCatName(String  cat_name) {
         return productRepository.ProductByCategory_Name_Hierarchy(cat_name).stream()
+                .map(ProductRepr::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductRepr> findByCatNameAndBrands(String cat_name, List<String> brands) {
+        return productRepository.ProductByCategory_Name_Hierarchy_And_Brands(cat_name, brands).stream()
+                .map(ProductRepr::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductRepr> findProductByBrand(List<Brand> brands) {
+        return productRepository.findProductByBrandIn(brands).stream()
                 .map(ProductRepr::new)
                 .collect(Collectors.toList());
     }

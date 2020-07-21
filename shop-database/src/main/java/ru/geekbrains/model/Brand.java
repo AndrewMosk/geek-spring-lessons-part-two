@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "brands")
@@ -21,6 +22,12 @@ public class Brand implements Serializable {
             mappedBy = "brand",
             cascade = CascadeType.ALL)
     private List<Product> products;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "brands_categories",
+            joinColumns = @JoinColumn(name = "brand_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
 
     public Brand() {
     }
@@ -51,6 +58,14 @@ public class Brand implements Serializable {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
     @Override
