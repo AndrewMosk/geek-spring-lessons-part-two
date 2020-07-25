@@ -12,7 +12,9 @@ import ru.geekbrains.model.Category;
 import ru.geekbrains.repo.BrandRepository;
 import ru.geekbrains.repo.CategoryRepository;
 import ru.geekbrains.service.ProductService;
+import ru.geekbrains.service.StockService;
 import ru.geekbrains.service.model.SelectedFilters;
+import ru.geekbrains.service.model.StockInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +33,14 @@ public class ProductsController {
 
     private final BrandRepository brandRepository;
 
+    private final StockService stockService;
+
     @Autowired
-    public ProductsController(ProductService productService, CategoryRepository categoryRepository, BrandRepository brandRepository) {
+    public ProductsController(ProductService productService, CategoryRepository categoryRepository, BrandRepository brandRepository, StockService stockService) {
         this.productService = productService;
         this.categoryRepository = categoryRepository;
         this.brandRepository = brandRepository;
+        this.stockService = stockService;
     }
 
     @GetMapping("/store")
@@ -107,11 +112,20 @@ public class ProductsController {
     @GetMapping("/product/{id}/view")
     public String adminEditProduct(Model model, @PathVariable("id") Long id) {
         model.addAttribute("activePage", "Products");
-        model.addAttribute("product", productService.findById(id).orElseThrow(NotFoundException::new));
+        //model.addAttribute("product", productService.findById(id).orElseThrow(NotFoundException::new));
+
+        ProductRepr productRepr = productService.findById(id).orElseThrow(IllegalArgumentException::new);
+        Long productReprId = productRepr.getId();
+        StockInfo stockInfo = stockService.getStockInfo(productReprId);
+        Integer stockInfoCount = stockInfo.getCount();
+
+
+        productRepr.setCountInStock(stockInfoCount);
+        model.addAttribute("product", productRepr);
 
         Optional<ProductRepr> productReprOptional = productService.findById(id);
         if (productReprOptional.isPresent()) {
-            ProductRepr productRepr = productReprOptional.get();
+            //ProductRepr productRepr = productReprOptional.get();
             model.addAttribute("categories", categoryRepository.findCategoryWithParents(productRepr.getCategory().getId()));
         }
 
