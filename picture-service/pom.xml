@@ -8,7 +8,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-<!--    <groupId>ru.geekbrains</groupId>-->
+    <groupId>ru.geekbrains</groupId>
     <artifactId>picture-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>picture-service</name>
