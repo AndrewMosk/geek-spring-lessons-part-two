@@ -158,7 +158,7 @@
 					<div class="col-md-4 col-xs-6" th:each="prod : ${products}">
 						<div class="product">
 							<div class="product-img">
-								<img th:src="@{/picture/{pictureId}(pictureId=${prod.pictures.get(0).getId()})}" alt="">
+								<img th:src="@{http://localhost:8083/picture/{pictureId}(pictureId=${prod.pictures.get(0).getId()})}" alt="">
 								<div class="product-label">
 									<span class="sale">-30%</span>
 									<span class="new">NEW</span>

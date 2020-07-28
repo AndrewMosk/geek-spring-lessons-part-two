@@ -53,7 +53,7 @@
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
 							<div class="product-preview" th:each="pict : ${product.pictures}">
-								<img th:src="@{/picture/{pictureId}(pictureId=${pict.id})}" alt="">
+								<img th:src="@{http://localhost:8083/picture/{pictureId}(pictureId=${pict.id})}" alt="">
 							</div>
 						</div>
 					</div>
@@ -63,7 +63,7 @@
 					<div class="col-md-2  col-md-pull-5">
 						<div id="product-imgs">
 							<div class="product-preview" th:each="pict : ${product.pictures}">
-								<img th:src="@{/picture/{pictureId}(pictureId=${pict.id})}" alt="">
+								<img th:src="@{http://localhost:8083/picture/{pictureId}(pictureId=${pict.id})}" alt="">
 							</div>
 						</div>
 					</div>
@@ -86,6 +86,7 @@
 							<div>
 								<h3 class="product-price" th:text="${product.getCost()}">$980.00 <del class="product-old-price">$990.00</del></h3>
 								<span class="product-available">In Stock</span>
+								<h3 class="product-count-in-stock" th:text="${product.getCountInStock()}">99 </h3>
 							</div>
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 

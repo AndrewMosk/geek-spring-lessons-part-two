@@ -28,6 +28,8 @@ public class ProductRepr implements Serializable {
 
     private MultipartFile[] newPictures;
 
+    private Integer countInStock;
+
     public ProductRepr() {
     }
 
@@ -96,6 +98,14 @@ public class ProductRepr implements Serializable {
 
     public void setNewPictures(MultipartFile[] newPictures) {
         this.newPictures = newPictures;
+    }
+
+    public Integer getCountInStock() {
+        return countInStock;
+    }
+
+    public void setCountInStock(Integer countInStock) {
+        this.countInStock = countInStock;
     }
 
     @Override
