@@ -16,8 +16,6 @@ import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.file.FileReadingMessageSource;
-import org.springframework.integration.file.transformer.FileToStringTransformer;
-//import org.springframework.integration.jdbc.JdbcMessageHandler;
 import org.springframework.integration.jpa.dsl.Jpa;
 import org.springframework.integration.jpa.dsl.JpaUpdatingOutboundEndpointSpec;
 import org.springframework.integration.jpa.support.PersistMode;
@@ -28,8 +26,8 @@ import javax.persistence.EntityManagerFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Configuration
@@ -42,9 +40,6 @@ public class ImportConfiguration {
 
     @Value("${source.dir.path}")
     private String sourceDirectoryPath;
-
-    @Value("${dest.dir.path}")
-    private String destDirectoryPath;
 
     public ImportConfiguration(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
@@ -69,17 +64,11 @@ public class ImportConfiguration {
     @Bean
     public IntegrationFlow fileMoveFlow() {
         return IntegrationFlows.from(sourceDirectory(), conf -> conf.poller(Pollers.fixedDelay(2000)))
-                .filter(msg -> ((File) msg).getName().endsWith(".txt"))
-                .transform(new FileToStringTransformer())
-//                .split(s -> s.delimiters("\n"))
-
-                .<String, Brand>transform(new GenericTransformer<String, List<Brand>>() {
+                .filter(msg -> ((File) msg).getName().endsWith(".csv"))
+                .transform(new GenericTransformer<String, List<Brand>>() {
                     @Override
                     public List<Brand> transform(String name) {
-//                        Brand brand = new Brand();
-//                        brand.setName(name);
-//                        return brand;
-                        return parseCsv();
+                        return parseCsv(name);
 
                     }
                 })
@@ -88,28 +77,19 @@ public class ImportConfiguration {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    private List<Brand>  parseCsv()  {
+    private List<Brand>  parseCsv(String name)  {
         CsvToBean csv = new CsvToBean();
-        String csvFilename = "F:/User/Andrew/Downloads/data.csv";
         CSVReader csvReader = null;
         try {
-            csvReader = new CSVReader(new FileReader(csvFilename));
+            csvReader = new CSVReader(new FileReader(name));
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        
-        List list = csv.parse(setColumnMapping(), csvReader);
-        List<Brand> brands = new ArrayList<>();
-        for (Object object : list) {
-            brands.add((Brand) object);
-        }
-        return brands;
+        List<Brand>brands = csv.parse(setColumnMapping(), csvReader);
 
-    }
+        return brands.stream().map(o -> (Brand) o).collect(Collectors.toList());
 
-    private Brand castToBrand(Object object) {
-        return (Brand) object;
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
