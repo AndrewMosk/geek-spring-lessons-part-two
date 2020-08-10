@@ -14,9 +14,9 @@ import ru.geekbrains.repo.BrandRepository;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -35,20 +35,50 @@ public class BrandControllerTest {
     @WithMockUser(value = "admin", password = "admin", roles = {"ADMIN"})
     @Test
     public void testNewBrand() throws Exception {
-        mvc.perform(post("/brand")
+        String name = "New brand";
+        addNewBrandToDB(name);
+
+        Optional<Brand> actualBrand = getBrandFromDB(name);
+
+        assertTrue(actualBrand.isPresent());
+        assertEquals(name, actualBrand.get().getName());
+    }
+    
+    @WithMockUser(value = "admin", password = "admin", roles = {"ADMIN"})
+    @Test
+    public void testDeleteBrand() throws Exception {
+        String name = "New brand";
+        addNewBrandToDB(name);
+
+        Optional<Brand> actualBrand = getBrandFromDB(name);
+
+        assertTrue(actualBrand.isPresent());
+        Long id = actualBrand.get().getId();
+
+        mvc.perform(delete("/brand/")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("id", "-1")
-                .param("name", "New brand")
+                .param("id", String.valueOf(id))
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/brand"));
 
+        Optional<Brand> actualBrandAfterDelete = getBrandFromDB(name);
+        assertFalse(actualBrandAfterDelete.isPresent());
+    }
+
+    private void addNewBrandToDB(String name) throws Exception {
+        mvc.perform(post("/brand")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("id", "-1")
+                .param("name", name)
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/brand"));
+    }
+
+    private Optional<Brand> getBrandFromDB(String name) {
         Brand brand = new Brand();
-        brand.setName("New brand");
-        Optional<Brand> actualBrand = brandRepository.findOne(Example.of(brand));
-
-        assertTrue(actualBrand.isPresent());
-        assertEquals("New brand", actualBrand.get().getName());
-
+        brand.setName(name);
+        return brandRepository.findOne(Example.of(brand));
     }
 }
