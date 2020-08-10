@@ -36,19 +36,19 @@ public class BrandControllerTest {
     @Test
     public void testNewBrand() throws Exception {
         String name = "New brand";
-        addNewBrandToDB(name);
+        saveBrandToDB(name, "-1");
 
         Optional<Brand> actualBrand = getBrandFromDB(name);
 
         assertTrue(actualBrand.isPresent());
         assertEquals(name, actualBrand.get().getName());
     }
-    
+
     @WithMockUser(value = "admin", password = "admin", roles = {"ADMIN"})
     @Test
     public void testDeleteBrand() throws Exception {
         String name = "New brand";
-        addNewBrandToDB(name);
+        saveBrandToDB(name, "-1");
 
         Optional<Brand> actualBrand = getBrandFromDB(name);
 
@@ -66,10 +66,29 @@ public class BrandControllerTest {
         assertFalse(actualBrandAfterDelete.isPresent());
     }
 
-    private void addNewBrandToDB(String name) throws Exception {
+    @WithMockUser(value = "admin", password = "admin", roles = {"ADMIN"})
+    @Test
+    public void testEditBrand() throws Exception {
+        String name = "New brand";
+        saveBrandToDB(name, "-1");
+
+        Optional<Brand> actualBrand = getBrandFromDB(name);
+
+        assertTrue(actualBrand.isPresent());
+        Long id = actualBrand.get().getId();
+
+        String editedName = name + " edited";
+        saveBrandToDB(editedName, String.valueOf(id));
+
+        Optional<Brand> actualEditedBrand = getBrandFromDB(editedName);
+        assertTrue(actualEditedBrand.isPresent());
+        assertEquals(editedName, actualEditedBrand.get().getName());
+    }
+
+    private void saveBrandToDB(String name, String id) throws Exception {
         mvc.perform(post("/brand")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("id", "-1")
+                .param("id", id)
                 .param("name", name)
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection())
