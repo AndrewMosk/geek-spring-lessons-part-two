@@ -28,6 +28,7 @@
         <module>stock-service</module>
         <module>shop-eureka</module>
         <module>shop-zuul-proxy</module>
+        <module>shop-ui-test</module>
     </modules>
 
     <dependencyManagement>
