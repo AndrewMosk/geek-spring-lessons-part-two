@@ -35,10 +35,10 @@ public class LoginSteps {
     public void iProvideUsernameAsAndPasswordAs(String username, String password) throws Throwable {
         WebElement webElement = webDriver.findElement(By.id("inp-username"));
         webElement.sendKeys(username);
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         webElement = webDriver.findElement(By.id("inp-password"));
         webElement.sendKeys(password);
-        Thread.sleep(2000);
+        Thread.sleep(1000);
     }
 
     @Then("^name should be \"([^\"]*)\"$")
@@ -57,7 +57,7 @@ public class LoginSteps {
         WebElement webElement = webDriver.findElement(By.id("logged-in-username"));
         Thread.sleep(1000);
         webElement.click();
-        Thread.sleep(10000);
+        Thread.sleep(1000);
     }
 
     @When("^click logout button$")
