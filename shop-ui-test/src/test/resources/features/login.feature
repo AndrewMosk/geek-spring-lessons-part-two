@@ -12,7 +12,7 @@ Feature: Login
 
     Examples:
       | username | password | name |
-      | admin | admin | admin |
+      | admin | pass | admin |
 
 
 

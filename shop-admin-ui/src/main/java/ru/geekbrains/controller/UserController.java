@@ -31,7 +31,7 @@ public class UserController {
         this.userService = userService;
         this.roleRepository = roleRepository;
     }
-    
+
     @GetMapping
     public String userList(Model model) {
 
