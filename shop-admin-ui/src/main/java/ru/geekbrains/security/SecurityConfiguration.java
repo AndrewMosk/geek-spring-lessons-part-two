@@ -46,22 +46,20 @@ public class SecurityConfiguration {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
-                    .antMatcher("/api/**")
                     .authorizeRequests()
-                    .anyRequest()
-                    .hasAnyRole("ADMIN", "GUEST")
+                    .antMatchers("/css/*").permitAll()
+                    .antMatchers("/js/*").permitAll()
+                    .antMatchers("/webfonts/*").permitAll()
+                    .antMatchers("/**").authenticated()
                     .and()
-                    .httpBasic()
-                    .authenticationEntryPoint((req, resp, exception) -> {
-                        resp.setContentType("application/json");
-                        resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                        resp.setCharacterEncoding("UTF-8");
-                        resp.getWriter().println("{ \"error\": \"" + exception.getMessage() + "\" }");
-                    })
+                    .formLogin()
+                    .loginPage("/login")
+                    .loginProcessingUrl("/authenticateTheUser")
+                    .permitAll()
                     .and()
-                    .csrf().disable()
-                    .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                    .logout()
+                    .logoutSuccessUrl("/login")
+                    .permitAll();
         }
     }
 
